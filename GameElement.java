@@ -5,6 +5,7 @@ public class GameElement extends JLabel {
 
     public GameElement(Scene s){
         scene = s;
+        scene.add(this);
     }
 
     public Scene getScene(){

@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.Arrays;
 
 public abstract class GameCharacter extends GameElement implements Collidable{
     private int[] velocity;
