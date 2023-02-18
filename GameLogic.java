@@ -15,7 +15,7 @@ public class GameLogic {
                     // contains general collision and appearance variables, lateral movement, gravity effects
                 // player and enemy subclasses
                     // player
-                        // vertical movement options (jumping and falling), block breaking/enemy collision
+                        // -- vertical movement options (jumping and falling), block breaking/enemy collision
                     // enemy
                         // death collision at top of enemy, AI movement algorithm
     // level creation (possibly send data to gui portion of project as opposed to creating solely in this class

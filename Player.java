@@ -3,6 +3,7 @@ import java.awt.event.KeyListener;
 
 public class Player extends GameCharacter implements KeyListener {
 
+    final int xVelocity = 1; // Serena for scaling values
 
     public Player(Scene scene, int movingSpeed, int jumpingSpeed) {
         super(scene, movingSpeed, jumpingSpeed);
@@ -14,12 +15,18 @@ public class Player extends GameCharacter implements KeyListener {
     }
 
     @Override
-    public void die() {
+    void loseHealth() {
+
+    }
+
+    @Override
+    void die() {
 
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
+
     }
 
     @Override
@@ -48,4 +55,9 @@ public class Player extends GameCharacter implements KeyListener {
                 break;
         }
     }
+
+
 }
+
+
+// Li An for KeyListener

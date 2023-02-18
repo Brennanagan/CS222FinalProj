@@ -1,14 +1,17 @@
 import javax.swing.*;
 
 public class GameElement extends JLabel {
-    private Scene scene;
 
-    public GameElement(Scene s){
-        scene = s;
-        scene.add(this);
+    Scene s;
+
+    public GameElement(Scene s)
+    {
+        this.s = s;
+        this.setOpaque(true);
+        this.setVisible(true);
     }
 
     public Scene getScene(){
-        return scene;
+        return s;
     }
 }
