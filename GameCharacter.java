@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.util.Arrays;
 
 public abstract class GameCharacter extends GameElement implements Collidable{
     private int[] velocity;
@@ -12,10 +11,6 @@ public abstract class GameCharacter extends GameElement implements Collidable{
 
     private int health;
 
-
-    /**
-     * Time between two frames
-     */
     public static final int period = 20;
 
     public static final int LEFT = -1;
@@ -30,45 +25,6 @@ public abstract class GameCharacter extends GameElement implements Collidable{
         this.movingSpeed = movingSpeed;
         this.jumpingSpeed = jumpingSpeed;
 
-    }
-
-    private int getFacing(){
-        return facing;
-    }
-
-    private void setFacing(int facing){
-        if (this.facing != facing) {
-            stop(this.facing);
-            this.facing = facing;
-            if (facing == LEFT) {
-                //flip the Icon to facing left
-                moving[1] = false;
-            } else {
-                //flip the Icon to facing right
-                moving[0] = false;
-            }
-        }
-    }
-
-    @Override
-    public boolean isEnabled(){
-        return enabled;
-    }
-
-    @Override
-    public void setEnabled(boolean enabled){
-        this.enabled = enabled;
-        if (enabled){
-            start();
-        }
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
     }
 
     private void start(){
@@ -159,6 +115,28 @@ public abstract class GameCharacter extends GameElement implements Collidable{
         return hit;
     }
 
+    private void setFacing(int facing){
+        if (this.facing != facing) {
+            stop(this.facing);
+            this.facing = facing;
+            if (facing == LEFT) {
+                //flip the Icon to facing left
+                moving[1] = false;
+            } else {
+                //flip the Icon to facing right
+                moving[0] = false;
+            }
+        }
+    }
+
+    @Override
+    public void setEnabled(boolean enabled){
+        this.enabled = enabled;
+        if (enabled){
+            start();
+        }
+    }
+
     public void move(int facing){
         setFacing(facing);
         moving[facing == -1? 0: facing] = true;
@@ -193,12 +171,7 @@ public abstract class GameCharacter extends GameElement implements Collidable{
         velocity[1] -= G;
     }
 
-    public void loseHealth(int damage){
-        health -= damage;
-        if (health <= 0){
-            die();
-        }
-    }
+    abstract void loseHealth();
 
-    public abstract void die();
+    abstract void die();
 }
