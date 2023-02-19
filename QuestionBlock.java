@@ -13,10 +13,12 @@ public class QuestionBlock extends Block{
 
     @Override
     public void collideReaction(Collidable other, int from) {
-        if (from == 1)
+        if (from == Collidable.BOTTOM)
         {
+            System.out.println("Ahhh");
             disabled = true;
-            setIcon(new ImageIcon()); // used q block from Serena
+            setBackground(Color.green);
+//            setIcon(new ImageIcon()); // used q block from Serena
         }
     }
 

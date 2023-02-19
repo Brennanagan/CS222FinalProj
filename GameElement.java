@@ -7,6 +7,7 @@ public class GameElement extends JLabel {
     public GameElement(Scene s)
     {
         this.s = s;
+        s.add(this);
         this.setOpaque(true);
         this.setVisible(true);
     }

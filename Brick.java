@@ -16,6 +16,7 @@ public class Brick extends Block{
         if (from ==Collidable.BOTTOM)
         {
             s.remove(this);
+            s.updateUI();
         }
     }
 }

@@ -13,28 +13,18 @@ public class GameLevel extends JPanel {
     int score;
     int timer;
     final int unitLength = 20;
-    public Scene thisScene;
+    Player player;
 
-    public GameLevel()
-    {
-        this.setLayout(null);
-        currentScene = scenes.get(0);
-        timer = 500; //500 seconds to complete level
-        score = 0;
-        this.setVisible(true);
-        this.setOpaque(true);
-        this.setBounds(0,0, 1300, 800);
-    }
     public GameLevel(File file) throws IOException {
         this.setLayout(null);
         this.LoadLevelFromFile(file);
         currentScene = scenes.get(0);
         timer = 500; //500 seconds to complete level
         score = 0;
-        this.setBounds(0,0,1300, 800);
+        this.setBounds(0,0,2000, 1000);
 
         this.setVisible(true);
-        currentScene.addComponents();
+//        currentScene.addComponents();
     }
 
     // A = air, G = ground, Q = Q-block, B = brick, PU = usable pipe, PN = non-usable pipe (maybe multiple parts?), E = elevation block
@@ -49,34 +39,30 @@ public class GameLevel extends JPanel {
         String fullFile = Files.readString(path);
 
         String[] sceneArray = fullFile.split("_");
-
-        int sceneQuant = sceneArray.length-1;
-
-        System.out.println(sceneQuant);
         int visIdx = 0;
-        for(int w = 0; w<=sceneQuant; w++) {
+        for(int w = 0; w < sceneArray.length; w++) {
 
-            String stringScene = (sceneArray[w]);
-            stringScene = stringScene.replace("\r\n", "");
+            String stringScene = sceneArray[w];
+            stringScene = stringScene.replaceAll("\r\n", "");
             String[] splitScene = stringScene.split("");
 
-            thisScene = new Scene(this);
+            Scene thisScene = new Scene(this);
 
             for (int z = 0; z < sceneElementQuant; z++) {
 
                 String splitGameElement = splitScene[z];
                 visIdx++;
-                System.out.println(splitGameElement);
-                thisScene = addElement(thisScene, splitGameElement, (z+(w*sceneElementQuant)));
+//                System.out.println(splitGameElement);
+                addElement(thisScene, splitGameElement, (z+(w*sceneElementQuant)));
             }
-
             scenes.add(thisScene);
             visIdx++;
         }
+        System.out.println(scenes);
     }
 
     // A = air, G = ground, Q = Q-block, B = brick, PU = usable pipe, PN = non-usable pipe (maybe multiple parts?), E = elevation block
-    Scene addElement(Scene scene, String sGE, int visualIndex)
+    void addElement(Scene scene, String sGE, int visualIndex)
     {
 
     visualIndex++;
@@ -89,48 +75,41 @@ public class GameLevel extends JPanel {
         xBound = 1280;
     }
     String letter = sGE;
-    System.out.println(letter);
+//    System.out.println(letter);
 
-        if (letter.equalsIgnoreCase("G")) //will autoadding GameElement through GameElement constructor create issues here?
+
+        if (letter.equalsIgnoreCase("P")) //will autoadding GameElement through GameElement constructor create issues here?
         {
-            Wall ground = new Wall(thisScene, 1);
+            Player p = new Player(scene, 5, 15);
+            p.setBounds(xBound, yBound, unitLength, unitLength);
+            System.out.println((xBound + 1) + ", " + (yBound + 1));
+            this.player = p;
+        }else if (letter.equalsIgnoreCase("G")) {
+            Wall ground = new Wall(scene, 1);
             ground.setBounds(xBound, yBound, unitLength, unitLength);
-            scene.addWall(ground);
         } else if (letter.equalsIgnoreCase("E")) {
-            Wall elevation = new Wall(thisScene, 2);
+            Wall elevation = new Wall(scene, 2);
             elevation.setBounds(xBound, yBound, unitLength, unitLength);
-            scene.addWall(elevation);
         } else if (letter.equalsIgnoreCase("B")) {
-            Brick brick = new Brick(thisScene);
+            Brick brick = new Brick(scene);
             brick.setBounds(xBound, yBound, unitLength, unitLength);
-            scene.addBrick(brick);
         } else if (letter.equalsIgnoreCase("Q")) {
-            QuestionBlock qBlock = new QuestionBlock(thisScene);
+            QuestionBlock qBlock = new QuestionBlock(scene);
             qBlock.setBounds(xBound, yBound, unitLength, unitLength);
-            scene.addQBlock(qBlock);
         } else if (letter.equalsIgnoreCase("PU")) {
-            Pipe goodPipe = new Pipe(thisScene, true);
+            Pipe goodPipe = new Pipe(scene, true);
             goodPipe.setBounds(xBound, yBound, unitLength, unitLength);
-            scene.addPipe(goodPipe);
         } else if (letter.equalsIgnoreCase("PN")) {
-            Pipe badPipe = new Pipe(thisScene, false);
+            Pipe badPipe = new Pipe(scene, false);
             badPipe.setBounds(xBound, yBound, unitLength, unitLength);
-            scene.addPipe(badPipe);
         } else if (letter.equalsIgnoreCase("A")) {
-//            Air air = new Air(scene);
-//            air.setBounds(xBound, yBound, unitLength, unitLength);
-//            air.setBackground(Color.cyan);
-//            scene.addAir(air);
+
         } else {
             System.out.println("Error reading block type");
-            System.out.println(sGE);
+//            System.out.println(sGE);
             if (sGE == " ")
             System.out.println("Incorrect Space");
         }
-
-
-        //...
-        return scene;
     }
 
     Scene getScene()
@@ -138,10 +117,14 @@ public class GameLevel extends JPanel {
         return currentScene;
     }
 
+    Player getPlayer(){
+        return player;
+    }
 
     void start()
     {
         add(currentScene);
+        player.setEnabled(true);
     }
 
     void timer()

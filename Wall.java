@@ -24,6 +24,6 @@ public class Wall extends Block{
 
     @Override
     public void collideReaction(Collidable other, int from) {
-        //
+
     }
 }

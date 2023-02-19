@@ -16,7 +16,7 @@ public abstract class GameCharacter extends GameElement implements Collidable{
     public static final int LEFT = -1;
     public static final int RIGHT = 1;
 
-    public static final int G = 3;
+    public static final int G = 2;
 
     public GameCharacter(Scene scene, int movingSpeed, int jumpingSpeed){
         super(scene);
@@ -89,6 +89,7 @@ public abstract class GameCharacter extends GameElement implements Collidable{
                 Component h = getScene().getComponentAt(targetX, y);
                 if (h instanceof Collidable) {
                     hit = (Collidable) h;
+                    return hit;
                 }
             }
         }
@@ -105,11 +106,13 @@ public abstract class GameCharacter extends GameElement implements Collidable{
         else{
             targetY = getY() + getHeight() - dy;
         }
+
         for (int x = getX(); x < getX() + getWidth(); x++) {
             Component h = getScene().getComponentAt(x, targetY);
 
             if (h instanceof Collidable) {
                 hit = (Collidable) h;
+                return hit;
             }
         }
         return hit;
@@ -169,6 +172,10 @@ public abstract class GameCharacter extends GameElement implements Collidable{
 
     public void fall(){
         velocity[1] -= G;
+        if (velocity[1] < -15){
+            velocity[1] = -15;
+        }
+        System.out.println(velocity[1]);
     }
 
     abstract void loseHealth();

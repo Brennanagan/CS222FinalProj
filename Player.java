@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -7,6 +9,10 @@ public class Player extends GameCharacter implements KeyListener {
 
     public Player(Scene scene, int movingSpeed, int jumpingSpeed) {
         super(scene, movingSpeed, jumpingSpeed);
+        setText("       Hi");
+        setBackground(Color.YELLOW);
+        setSize(20, 20);
+        setOpaque(true);
     }
 
     @Override

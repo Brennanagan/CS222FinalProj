@@ -6,6 +6,7 @@ public class Scene extends JPanel {
     ArrayList<GameElement> lmnts;
     Scene nextScene;
     GameLevel gameLevel;
+    int id;
 
     public Scene() {
         this.setLayout(null);
@@ -19,34 +20,44 @@ public class Scene extends JPanel {
         setLayout(null);
         lmnts = new ArrayList<GameElement>();
         this.gameLevel = gameLevel;
-
+        setBounds(0, 0, 2000, 1000);
 
     }
 
-    public void addWall(Wall wall) {
-        this.add(wall);
-        lmnts.add(wall);
+    public void add(GameElement ge){
+        super.add(ge);
+        lmnts.add(ge);
     }
 
-    public void addBrick(Brick brick) {
-        this.add(brick);
-        lmnts.add(brick);
-    }
-
-    public void addQBlock(QuestionBlock qBlock) {
-        this.add(qBlock);
-        lmnts.add(qBlock);
-    }
-
-    public void addPipe(Pipe pipe) {
-        this.add(pipe);
-        lmnts.add(pipe);
-    }
-
-    public void addAir(Air air) {
-        this.add(air);
-        lmnts.add(air);
-    }
+//    public void addWall(Wall wall) {
+//        this.add(wall);
+//        lmnts.add(wall);
+//    }
+//
+//    public void addBrick(Brick brick) {
+//        this.add(brick);
+//        lmnts.add(brick);
+//    }
+//
+//    public void addQBlock(QuestionBlock qBlock) {
+//        this.add(qBlock);
+//        lmnts.add(qBlock);
+//    }
+//
+//    public void addPipe(Pipe pipe) {
+//        this.add(pipe);
+//        lmnts.add(pipe);
+//    }
+//
+//    public void addAir(Air air) {
+//        this.add(air);
+//        lmnts.add(air);
+//    }
+//
+//    public void addPlayer(Player p){
+//        this.add(p);
+//        lmnts.add(p);
+//    }
 
     public void makeNextScene() {
         gameLevel.add(nextScene); // test this concept
@@ -61,6 +72,9 @@ public class Scene extends JPanel {
         }
     }
 
+    public String toString(){
+        return "Scene " + id;
+    }
 
 
 
